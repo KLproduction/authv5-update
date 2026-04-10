@@ -1,24 +1,17 @@
-import {Header} from "@/components/auth/header"
-import{
-
-} from "@/components/ui/card"
-import { Button } from "../ui/button"
-import Link from "next/link"
 import { CardWapper } from "./CardWrapper"
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons"
 
 export const ErrorCard = () =>{
     return(
-        <div className=" flex flex-col justify-center items-center h-full">
-            <CardWapper 
-            headerLabel="Oops! Something went wrong!"
-            backBtnHref="/auth/login"
-            backBtnLabel="Back">
-                <div className="w-full flex items-center justify-center">
-                    <ExclamationTriangleIcon className=" text-destructive"/>
+        <CardWapper 
+          headerLabel="Something went wrong"
+          backBtnHref="/auth/login"
+          backBtnLabel="Back to login">
+            <div className="flex min-h-[120px] w-full items-center justify-center">
+                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-destructive/10 text-destructive">
+                  <ExclamationTriangleIcon className="h-6 w-6"/>
                 </div>
-            </CardWapper>
-
-        </div>
+            </div>
+        </CardWapper>
     )
 }

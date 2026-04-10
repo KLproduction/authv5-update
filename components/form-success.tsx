@@ -10,9 +10,9 @@ export const FormSuccess = ({
     if(!message) return null;
 
     return(
-        <div className=" bg-emerald-500/15 p-3 rounded-md flex items-center gap-x-2 test-sm text-emerald-500">
-            <CheckCircledIcon className="h-4 w-4"/>
-            <p>{message}</p>
+        <div className="flex items-start gap-x-2 rounded-md border border-emerald-500/20 bg-emerald-500/10 p-3 text-sm text-emerald-600">
+            <CheckCircledIcon className="mt-0.5 h-4 w-4 shrink-0"/>
+            <p className="leading-5">{message}</p>
         </div>
     )
 }

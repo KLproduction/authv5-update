@@ -2,6 +2,7 @@
 
 import { useCurrentRole } from "@/hooks/use-current-role"
 import { UserRole } from "@prisma/client"
+import { hasRole } from "@/lib/role-policy"
 import { FormError } from "../form-error"
 
 
@@ -16,7 +17,7 @@ export const RoleGate = ({
     allowedRole
 }:RoleGateProps) =>{
     const role = useCurrentRole()
-    if (role !== allowedRole){
+    if (!hasRole(role, [allowedRole])){
         return(
             <FormError message="You do not have permission to view this content!"/>
         )

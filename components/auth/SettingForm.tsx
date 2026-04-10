@@ -80,10 +80,10 @@ const Settingform = ({ user }: SettingFormProps) => {
       setSuccess("");
       setting(values)
         .then((data) => {
-          if (data.error) {
+          if (data && "error" in data && data.error) {
             setError(data.error);
           }
-          if (data.success) {
+          if (data && "success" in data && data.success) {
             update();
             setSuccess(data.success);
           }

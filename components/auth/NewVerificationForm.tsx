@@ -42,20 +42,18 @@ const NewVerificationForm = () => {
   }, [onSubmit]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center">
-      <CardWapper
-        headerLabel="Confirming your verification"
-        backBtnHref="/auth/login"
-        backBtnLabel="Back to Login"
-      >
-        <div className="flex w-full flex-col items-center justify-center gap-5">
-          {!success && !error && <BeatLoader />}
+    <CardWapper
+      headerLabel="Confirming your email"
+      backBtnHref="/auth/login"
+      backBtnLabel="Back to login"
+    >
+      <div className="flex min-h-[140px] w-full flex-col items-center justify-center gap-5 text-center">
+        {!success && !error && <BeatLoader />}
 
-          <FormSuccess message={success} />
-          {!success && <FormError message={error} />}
-        </div>
-      </CardWapper>
-    </div>
+        <FormSuccess message={success} />
+        {!success && <FormError message={error} />}
+      </div>
+    </CardWapper>
   );
 };
 

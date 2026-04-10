@@ -16,7 +16,6 @@ import SignOutBtn from "./SignOutBtn";
 
 export const UserBtn = () => {
   const user = useGetCurrentUser();
-  console.log("UserBtn user", user);
 
   return (
     <DropdownMenu>

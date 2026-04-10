@@ -25,45 +25,39 @@ export const CardWapper = ({
 }: CardWrapperProps) => {
   const { open: openSignIn, close: closeSignIn } = useSignInModel();
   const { open: openSignUp, close: closeSignUp } = useSignUpModel();
-  // Optional: Use useSignUpModel if backBtnLabel is provided and equals a specific value (e.g., 'Sign up')
-  let handleBackBtnClick = undefined;
-  if (backBtnLabel && backBtnLabel.toLowerCase().includes("sign up")) {
-    try {
-      handleBackBtnClick = (e: React.MouseEvent) => {
-        e.preventDefault();
-        closeSignIn();
-        openSignUp();
-      };
-    } catch {}
-  }
-  if (backBtnLabel && backBtnLabel.toLowerCase().includes("sign in")) {
-    try {
-      handleBackBtnClick = (e: React.MouseEvent) => {
-        e.preventDefault();
-        closeSignUp();
-        openSignIn();
-      };
-    } catch {}
-  }
+  const handleBackBtnClick =
+    backBtnLabel.toLowerCase().includes("sign up")
+      ? (e: React.MouseEvent) => {
+          e.preventDefault();
+          closeSignIn();
+          openSignUp();
+        }
+      : backBtnLabel.toLowerCase().includes("sign in")
+      ? (e: React.MouseEvent) => {
+          e.preventDefault();
+          closeSignUp();
+          openSignIn();
+        }
+      : undefined;
 
   return (
     <Card
-      className={`w-[400px] ${
-        noShadowOrBorder ? "border-none shadow-none" : "shadow-md"
-      } `}
+      className={`w-full max-w-[440px] border-border/70 bg-card/95 shadow-xl shadow-black/5 backdrop-blur-sm ${
+        noShadowOrBorder ? "border-none shadow-none" : ""
+      }`}
     >
-      <CardHeader>
+      <CardHeader className="space-y-3 px-6 pt-8">
         <Header label={headerLabel} />
       </CardHeader>
-      <CardContent>{children}</CardContent>
+      <CardContent className="px-6 pb-6 pt-2">{children}</CardContent>
       {showSocial && (
-        <CardFooter>
-          <Social></Social>
+        <CardFooter className="px-6 pb-2 pt-0">
+          <Social />
         </CardFooter>
       )}
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center px-6 pb-8">
         <Link
-          className="p-5 pb-16 text-sm"
+          className="text-sm text-muted-foreground transition-colors hover:text-foreground"
           href={backBtnHref}
           onClick={handleBackBtnClick}
         >

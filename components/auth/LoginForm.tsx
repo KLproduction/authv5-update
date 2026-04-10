@@ -54,15 +54,15 @@ export const LoginForm = ({ noBackground }: Props) => {
     startTransition(() => {
       login(values, callbackUrl)
         .then((data) => {
-          if (data?.error) {
+          if (data && "error" in data && data.error) {
             form.reset();
             toast.error(data.error);
           }
-          if (data?.success) {
+          if (data && "success" in data && data.success) {
             form.reset();
             setSuccess(data.success);
           }
-          if (data?.twoFactor) {
+          if (data && "twoFactor" in data && data.twoFactor) {
             setShowTwoFactor(true);
           }
         })
@@ -72,8 +72,8 @@ export const LoginForm = ({ noBackground }: Props) => {
 
   return (
     <CardWapper
-      headerLabel="Welcome"
-      backBtnLabel="Don't have a account? Sign up"
+      headerLabel="Welcome back"
+      backBtnLabel="Don't have an account? Sign up"
       backBtnHref="/auth/register"
       showSocial
       noShadowOrBorder={noBackground}
@@ -111,12 +111,12 @@ export const LoginForm = ({ noBackground }: Props) => {
                     <FormItem>
                       <FormLabel>Email</FormLabel>
                       <FormControl>
-                        <Input
-                          {...field}
-                          placeholder="Your Email..."
-                          type="email"
-                          disabled={isPending}
-                        />
+                      <Input
+                        {...field}
+                        placeholder="Enter your email"
+                        type="email"
+                        disabled={isPending}
+                      />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -129,18 +129,18 @@ export const LoginForm = ({ noBackground }: Props) => {
                     <FormItem>
                       <FormLabel>Password</FormLabel>
                       <FormControl>
-                        <Input
-                          {...field}
-                          placeholder="Your password..."
-                          type="password"
-                          disabled={isPending}
-                        />
+                      <Input
+                        {...field}
+                        placeholder="Enter your password"
+                        type="password"
+                        disabled={isPending}
+                      />
                       </FormControl>
                       <Button
                         size="sm"
                         variant="link"
                         asChild
-                        className="px-0 font-normal"
+                        className="px-0 font-normal text-muted-foreground"
                       >
                         <Link href="/auth/reset">Forgot password?</Link>
                       </Button>

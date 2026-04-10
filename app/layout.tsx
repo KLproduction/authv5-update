@@ -10,6 +10,7 @@ import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 import SignUpModel from "@/components/modals/sign-up-model";
 import SignInModel from "@/components/modals/sign-in-model";
+import { E2EReadyMarker } from "@/components/e2e-ready";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -34,6 +35,7 @@ export default async function RootLayout({
               <Navbar />
               <SignInModel />
               <SignUpModel />
+              <E2EReadyMarker />
 
               <Toaster />
               {children}

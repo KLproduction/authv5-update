@@ -1,36 +1,94 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Auth V5
 
-## Getting Started
+Next.js 16 + NextAuth v5 + Prisma auth starter kit.
 
-First, run the development server:
+## What you get
+
+- Credentials, Google, and GitHub sign-in
+- Email verification
+- Password reset
+- 2FA
+- Guest login
+- Role-based access control
+- Server-owned auth boundaries
+- Unit tests + Playwright smoke tests
+- Seed data for local development
+
+## Tech Stack
+
+- Next.js App Router
+- TypeScript
+- Prisma + PostgreSQL
+- NextAuth (Auth.js)
+- Tailwind CSS + shadcn/ui
+- React Hook Form + Zod
+- Playwright
+
+## Quick Start
+
+```bash
+npm install
+npm run db:seed
+npm run dev
+```
+
+Open `http://localhost:3000`.
+
+## Environment
+
+Required:
+
+- `DATABASE_URL`
+- `AUTH_SECRET` or `NEXTAUTH_SECRET`
+
+Optional:
+
+- `AUTH_GOOGLE_ID`
+- `AUTH_GOOGLE_SECRET`
+- `AUTH_GITHUB_ID`
+- `AUTH_GITHUB_SECRET`
+- `RESEND_API_KEY`
+- `NEXT_PUBLIC_SERVER_URL`
+- `NEXT_PUBLIC_PRODUCTION_URL`
+
+See [docs/provider-config.md](docs/provider-config.md) for behavior details.
+
+## Scripts
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run build
+npm run lint
+npm run test
+npm run test:e2e
+npm run test:e2e:update
+npm run db:seed
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Local Demo Accounts
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `admin@authkit.local` / `Admin123!`
+- `user@authkit.local` / `User123!`
+- `guest@authkit.local` / `Guest123!`
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Architecture
 
-## Learn More
+- Server Components by default
+- Server Actions for mutations
+- Auth and permission checks run on the server
+- Prisma is the source of truth for roles and ownership
 
-To learn more about Next.js, take a look at the following resources:
+## Docs
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [Auth diagrams](docs/auth-diagrams.md)
+- [Provider config](docs/provider-config.md)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Tests
 
-## Deploy on Vercel
+- Unit/domain tests: `npm run test`
+- Browser smoke tests: `npm run test:e2e`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Notes
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- `founder-report/` contains internal review notes and is ignored by git.
+- `nextjs-authentication/` is also ignored by git.

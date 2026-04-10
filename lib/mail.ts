@@ -1,18 +1,25 @@
 import { Resend } from "resend";
-import { db } from "./db";
+import { authProviders } from "@/lib/env";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(authProviders.resendApiKey);
+
+const shouldSkipEmailDelivery =
+  !authProviders.resendApiKey || process.env.NODE_ENV !== "production";
 
 const baseURL =
   process.env.NODE_ENV === "production"
-    ? process.env.NEXT_PUBLIC_PRODUCTION_URL
-    : process.env.NEXT_PUBLIC_SERVER_URL;
+    ? authProviders.productionUrl
+    : authProviders.serverUrl;
 
 export const sendVerificationEmail = async (
   email: string,
   token: string,
   userId?: string
 ) => {
+  if (shouldSkipEmailDelivery) {
+    return;
+  }
+
   const confirmLink = `${baseURL}/auth/new-verification?token=${token}&id=${userId}`;
 
   await resend.emails.send({
@@ -63,6 +70,10 @@ export const sendVerificationEmail = async (
   });
 };
 export const sendPasswordResentEmail = async (email: string, token: string) => {
+  if (shouldSkipEmailDelivery) {
+    return;
+  }
+
   const resetLink = `${baseURL}/auth/new-password?token=${token}`;
 
   await resend.emails.send({
@@ -114,6 +125,10 @@ export const sendPasswordResentEmail = async (email: string, token: string) => {
 };
 
 export const sendTwoFactorTokenEmail = async (email: string, token: string) => {
+  if (shouldSkipEmailDelivery) {
+    return;
+  }
+
   await resend.emails.send({
     from: "mail@shimgsolution.com",
     to: email,

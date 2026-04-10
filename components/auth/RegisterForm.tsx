@@ -53,7 +53,7 @@ export const RegisterForm = ({ noBackground }: Props) => {
   return (
     <CardWapper
       headerLabel="Create an account"
-      backBtnLabel="Already have a account? Sign in"
+      backBtnLabel="Already have an account? Sign in"
       backBtnHref="/auth/login"
       showSocial
       noShadowOrBorder={noBackground}
@@ -68,11 +68,11 @@ export const RegisterForm = ({ noBackground }: Props) => {
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input
-                      {...field}
-                      placeholder="Your Name..."
-                      disabled={isPending}
-                    />
+                      <Input
+                        {...field}
+                        placeholder="Enter your name"
+                        disabled={isPending}
+                      />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -85,12 +85,12 @@ export const RegisterForm = ({ noBackground }: Props) => {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input
-                      {...field}
-                      placeholder="Your email..."
-                      type="email"
-                      disabled={isPending}
-                    />
+                      <Input
+                        {...field}
+                        placeholder="Enter your email"
+                        type="email"
+                        disabled={isPending}
+                      />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -103,12 +103,12 @@ export const RegisterForm = ({ noBackground }: Props) => {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input
-                      {...field}
-                      placeholder="Your password..."
-                      type="password"
-                      disabled={isPending}
-                    />
+                      <Input
+                        {...field}
+                        placeholder="Create a password"
+                        type="password"
+                        disabled={isPending}
+                      />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -117,7 +117,7 @@ export const RegisterForm = ({ noBackground }: Props) => {
           </div>
           <FormError message={error} />
           <FormSuccess message={success} />
-          <Button typeof="submit" className="w-full" disabled={isPending}>
+          <Button type="submit" className="w-full" disabled={isPending}>
             Create an account
           </Button>
         </form>

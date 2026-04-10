@@ -7,33 +7,16 @@ import { db } from "@/lib/db";
 import { getUserByEmail } from "@/data/user";
 import { generateVerificationToken } from "@/lib/tokens";
 import { sendVerificationEmail } from "@/lib/mail";
+import { registerFlow } from "@/lib/auth-flow";
 
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
-  const validatedFieds = RegisterSchema.safeParse(values);
-
-  if (!validatedFieds.success) {
-    return { error: "Invalid fields!" };
-  }
-  const { email, password, name } = validatedFieds.data;
-  const hashedPassword = await bcrypt.hash(password, 10);
-  const existingUser = await getUserByEmail(email);
-
-  if (existingUser) {
-    return { error: "Email already in use" };
-  }
-
-  await db.user.create({
-    data: {
-      name,
-      email,
-      password: hashedPassword,
+  return registerFlow(values, {
+    getUserByEmail,
+    createUser: async (input) => {
+      await db.user.create({ data: input });
     },
+    hashPassword: async (password) => bcrypt.hash(password, 10),
+    generateVerificationToken,
+    sendVerificationEmail,
   });
-
-  const verificationToken = await generateVerificationToken(email);
-  await sendVerificationEmail(verificationToken.email, verificationToken.token);
-
-  return {
-    success: "Account Created! (Confirmation email not process in this stage.)",
-  };
 };

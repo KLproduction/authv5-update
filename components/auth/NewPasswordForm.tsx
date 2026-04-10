@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { CardWapper } from "./CardWrapper";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -22,8 +22,6 @@ import { useTransition } from "react";
 import { NewPasswordSchema } from "@/schemas";
 import { useSearchParams } from "next/navigation";
 import { newPassword } from "@/actions/new-password";
-import { getPasswordResetTokenByToken } from "@/data/password-reset-token";
-
 export const NewPasswordForm = () => {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>("");
@@ -51,42 +49,40 @@ export const NewPasswordForm = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center">
-      <CardWapper
-        headerLabel="Enter a new password"
-        backBtnLabel="Back to login"
-        backBtnHref="/auth/login"
-      >
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <div className="space-y-4">
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        placeholder="********"
-                        type="password"
-                        disabled={isPending}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <FormError message={error} />
-            <FormSuccess message={success} />
-            <Button typeof="submit" className="w-full" disabled={isPending}>
-              Reset password
-            </Button>
-          </form>
-        </Form>
-      </CardWapper>
-    </div>
+    <CardWapper
+      headerLabel="Create a new password"
+      backBtnLabel="Back to login"
+      backBtnHref="/auth/login"
+    >
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <div className="space-y-4">
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>New password</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      placeholder="Create a new password"
+                      type="password"
+                      disabled={isPending}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <FormError message={error} />
+          <FormSuccess message={success} />
+          <Button type="submit" className="w-full" disabled={isPending}>
+            Reset password
+          </Button>
+        </form>
+      </Form>
+    </CardWapper>
   );
 };

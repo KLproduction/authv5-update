@@ -32,6 +32,10 @@ yarn-error.log*
 # vercel
 .vercel
 
+# local notes / reports
+/founder-report/
+/nextjs-authentication/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

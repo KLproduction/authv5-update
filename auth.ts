@@ -4,13 +4,18 @@ import { getUserById } from "./data/user";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { db } from "./lib/db";
 import { UserRole } from "@prisma/client";
-import { string } from "zod";
 import { getTwoFactorConfirmationByUserId } from "./data/two-factor-confirmation";
 import { getAccountByUserId } from "./data/account";
+import {
+  isGuestExpired,
+  serializeGuestExpiresAt,
+} from "./lib/guest-policy";
+import { authSecret } from "./lib/env";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(db),
   session: { strategy: "jwt" },
+  secret: authSecret,
   ...authConfig,
   pages: {
     signIn: "/auth/login",
@@ -76,7 +81,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         session.user.isGuest = token.isGuest as boolean;
       }
       if (session.user) {
-        session.user.guestExpiresAt = token.guestExpiresAt as Date | null;
+        session.user.guestExpiresAt = token.guestExpiresAt as string | null;
       }
 
       return session;
@@ -89,6 +94,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
       const existingAccount = await getAccountByUserId(existingUser.id);
 
+      if (existingUser.isGuest && isGuestExpired(existingUser.guestExpiresAt)) {
+        return null;
+      }
+
       token.isOAuth = !!existingAccount;
       token.name = existingUser.name;
       token.email = existingUser.email;
@@ -96,7 +105,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
       token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
       token.isGuest = existingUser.isGuest;
-      token.guestExpiresAt = existingUser.guestExpiresAt;
+      token.guestExpiresAt = serializeGuestExpiresAt(existingUser.guestExpiresAt);
 
       return token;
     },

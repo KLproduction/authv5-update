@@ -7,7 +7,7 @@ export type ExtenderUser = DefaultSession["user"] & {
   isTwoFactorEnabled: boolean;
   isOAuth: boolean;
   isGuest: boolean;
-  guestExpiresAt?: Date | null;
+  guestExpiresAt?: string | null;
 };
 
 declare module "next-auth" {
