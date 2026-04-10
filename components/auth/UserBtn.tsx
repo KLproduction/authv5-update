@@ -10,12 +10,10 @@ import {
 import { Avatar, AvatarImage, AvatarFallback } from "../ui/avatar";
 import { FaUser } from "react-icons/fa";
 import { useCurrentUser } from "@/hooks/use-current-user";
-import { useGetCurrentUser } from "@/hooks/auth";
-import { useSession } from "next-auth/react";
 import SignOutBtn from "./SignOutBtn";
 
 export const UserBtn = () => {
-  const user = useGetCurrentUser();
+  const user = useCurrentUser();
 
   return (
     <DropdownMenu>

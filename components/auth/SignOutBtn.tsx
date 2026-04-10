@@ -1,21 +1,9 @@
 "use client";
-import { signOutAction } from "@/actions/signOut";
 import { Button } from "../ui/button";
 import { CgLogOut } from "react-icons/cg";
-import { useQueryClient } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
 import { useSignOut } from "@/hooks/auth";
 
 const SignOutBtn = () => {
-  // const queryClient = useQueryClient();
-  // const route = useRouter();
-
-  // const onClickHandler = async () => {
-  //   await signOutAction();
-  //   route.refresh();
-  //   queryClient.invalidateQueries({ queryKey: ["current"] });
-  // };
-
   const { signOutMutate } = useSignOut();
 
   return (
